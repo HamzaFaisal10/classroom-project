@@ -1,0 +1,11 @@
+revoke execute on function public.notify_class_change() from public, anon, authenticated;
+revoke execute on function public.notify_invite() from public, anon, authenticated;
+revoke execute on function public.profiles_guard() from public, anon, authenticated;
+revoke execute on function public.my_role() from public, anon;
+revoke execute on function public.is_admin() from public, anon;
+revoke execute on function public.can_see_class(uuid) from public, anon;
+revoke execute on function public.is_class_educator(uuid) from public, anon;
+revoke execute on function public.admin_create_invite(text,text,public.user_role,uuid,text) from public, anon;
+revoke execute on function public.admin_reset_link(uuid) from public, anon;
+grant execute on function public.my_role(), public.is_admin(), public.can_see_class(uuid), public.is_class_educator(uuid) to authenticated;
+grant execute on function public.admin_create_invite(text,text,public.user_role,uuid,text), public.admin_reset_link(uuid) to authenticated;
