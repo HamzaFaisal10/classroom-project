@@ -80,14 +80,14 @@ export default function ClassDetailPage() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <ClassAction c={c} role={profile.role} />
+          {(c.status === "scheduled" || c.status === "live") && <ClassAction c={c} role={profile.role} />}
           {editable && <Link href={`/classes/${c.id}/edit`} className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold hover:bg-slate-50"><Pencil className="h-4 w-4" />Edit</Link>}
         </div>
       </div>
 
       {msg && <div className="mb-4"><Alert kind="success">{msg}</Alert></div>}
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <Card>
             <CardHeader title={`Invited families (${invites.length})`} action={editable && invites.length > 0 ? <Button variant="ghost" className="py-1.5" onClick={() => remind()}><Bell className="h-4 w-4" />Remind all</Button> : undefined} />

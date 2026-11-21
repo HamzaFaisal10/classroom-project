@@ -46,7 +46,7 @@ export default function ProfilePage() {
   return (
     <>
       <PageHeader title="My profile" subtitle="Your details and sign-in settings." />
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="flex flex-col items-center p-6 text-center">
           <Avatar name={profile.full_name || profile.email} size="lg" />
           <p className="mt-3 font-semibold">{profile.full_name}</p>
@@ -58,7 +58,7 @@ export default function ProfilePage() {
             <form onSubmit={save} className="space-y-4">
               <h2 className="font-semibold">Personal details</h2>
               {msg && <Alert kind={msg.k}>{msg.t}</Alert>}
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="Full name"><input className="input" value={name} onChange={(e) => setName(e.target.value)} required /></Field>
                 <Field label="Email"><input className="input" value={profile.email} disabled /></Field>
                 <Field label="Phone"><input className="input" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+92 300 0000000" /></Field>
@@ -76,7 +76,7 @@ export default function ProfilePage() {
             <form onSubmit={changePw} className="space-y-4">
               <h2 className="font-semibold">Change password</h2>
               {pwMsg && <Alert kind={pwMsg.k}>{pwMsg.t}</Alert>}
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="New password"><input className="input" type="password" value={pw} onChange={(e) => setPw(e.target.value)} autoComplete="new-password" /></Field>
                 <Field label="Confirm password"><input className="input" type="password" value={pw2} onChange={(e) => setPw2(e.target.value)} autoComplete="new-password" /></Field>
               </div>

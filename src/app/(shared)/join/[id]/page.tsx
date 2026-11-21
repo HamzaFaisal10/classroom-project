@@ -62,7 +62,7 @@ export default function JoinPage() {
           </div>
         </div>
         <div className="space-y-6 p-6 sm:p-8">
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-4"><CalendarDays className="h-5 w-5 text-brand-600" /><div><p className="text-xs text-slate-500">Date</p><p className="text-sm font-semibold">{fmtDate(c.starts_at)}</p></div></div>
             <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-4"><Clock className="h-5 w-5 text-brand-600" /><div><p className="text-xs text-slate-500">Time ({tz()})</p><p className="text-sm font-semibold">{fmtTime(c.starts_at)} · {c.duration_min} min</p></div></div>
           </div>

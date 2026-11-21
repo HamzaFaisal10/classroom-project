@@ -54,7 +54,7 @@ export default function ReportsPage() {
       <PageHeader title="Reports" subtitle="Classes held and attendance."
         actions={<><select className="input w-40" value={days} onChange={(e) => setDays(Number(e.target.value))}><option value={7}>Last 7 days</option><option value={30}>Last 30 days</option><option value={90}>Last 90 days</option></select>
           <Button variant="secondary" onClick={exportCsv}><Download className="h-4 w-4" />Export CSV</Button></>} />
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat label="Classes held" value={held.length} icon={<Video className="h-5 w-5" />} />
         <Stat label="Attendance rate" value={`${rate}%`} icon={<Percent className="h-5 w-5" />} tone="teal" />
         <Stat label="Teaching hours" value={hours} icon={<Clock className="h-5 w-5" />} tone="amber" />

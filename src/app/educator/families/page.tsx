@@ -36,7 +36,7 @@ export default function EducatorFamilies() {
         <input className="input pl-9" placeholder="Search by name or child" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
       {rows.length === 0 ? <Card><Empty icon={<Users className="h-5 w-5" />} title="No families yet" text="Your admin assigns families to you." /></Card> : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {rows.map(({ f, upcoming, past }) => (
             <Card key={f.id} className="p-5">
               <div className="flex items-center gap-3">

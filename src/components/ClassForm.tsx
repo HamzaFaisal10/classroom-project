@@ -82,12 +82,12 @@ export function ClassForm({ existing }: { existing?: ClassRow }) {
   }
 
   return (
-    <form onSubmit={submit} className="grid gap-6 lg:grid-cols-5">
+    <form onSubmit={submit} className="grid grid-cols-1 gap-6 lg:grid-cols-5">
       <Card className="space-y-5 p-6 lg:col-span-3">
         {error && <Alert>{error}</Alert>}
         <Field label="Class title"><input className="input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Maths: Fractions" required /></Field>
         <Field label="Notes for families (optional)"><textarea className="input min-h-24" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What to prepare, materials, topics…" /></Field>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Date & time" hint={`Shown in your time zone (${tz()}). Families see their own.`}><input className="input" type="datetime-local" value={start} onChange={(e) => setStart(e.target.value)} required /></Field>
           <Field label="Duration">
             <select className="input" value={duration} onChange={(e) => setDuration(Number(e.target.value))}>

@@ -33,12 +33,12 @@ export default function EducatorDashboard() {
       {next ? <NextClassHero c={next} role="educator" /> : (
         <Card><Empty icon={<CalendarDays className="h-5 w-5" />} title="No upcoming classes" text="Schedule a class and invite your families." action={<LinkButton href="/classes/new">Schedule a class</LinkButton>} /></Card>
       )}
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat label="Classes this week" value={classes.filter((c) => new Date(c.starts_at).getTime() < weekEnd).length} icon={<CalendarDays className="h-5 w-5" />} />
         <Stat label="My families" value={families} icon={<Users className="h-5 w-5" />} tone="teal" />
         <Stat label="Pending RSVPs" value={pending} icon={<Clock4 className="h-5 w-5" />} tone="amber" />
       </div>
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader title="Today" />
           {today.length === 0 ? <p className="px-5 py-8 text-center text-sm text-slate-500">No classes today.</p> : <div className="divide-y divide-slate-100">{today.map((c) => <ClassRowItem key={c.id} c={c} role="educator" />)}</div>}

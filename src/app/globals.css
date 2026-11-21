@@ -18,7 +18,7 @@
 html, body { background: var(--color-canvas); color: var(--color-ink); }
 body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 
-.card { @apply bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_2px_rgba(15,23,42,0.04)]; }
+.card { @apply min-w-0 bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_2px_rgba(15,23,42,0.04)]; }
 .input { @apply w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-100 disabled:bg-slate-50; }
 .label { @apply mb-1.5 block text-sm font-medium text-slate-700; }
 .table-base { @apply w-full text-left text-sm; }

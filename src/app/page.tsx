@@ -42,7 +42,7 @@ export default function Landing() {
           </div>
 
           <div className="mx-auto mt-14 max-w-4xl rounded-3xl bg-ink p-3 shadow-2xl ring-1 ring-slate-900/10">
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 sm:col-span-2 sm:row-span-2 sm:aspect-auto">
                 <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-rose-600 px-2.5 py-1 text-xs font-semibold text-white"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />LIVE</div>
                 <div className="absolute bottom-3 left-3 rounded-lg bg-black/40 px-2 py-1 text-xs text-white">Ms. Ayesha · Camera 1</div>
@@ -59,7 +59,7 @@ export default function Landing() {
 
       <section id="features" className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="text-center text-3xl font-bold tracking-tight">Everything a live class needs</h2>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
             <div key={f.title} className="rounded-2xl border border-slate-200 p-6">
               <div className="inline-flex rounded-xl bg-brand-50 p-2.5 text-brand-600"><f.icon className="h-5 w-5" /></div>
@@ -71,7 +71,7 @@ export default function Landing() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {[
             { r: "Admin", t: "Manages educators and families, sends invitations, sees the master schedule and attendance reports." },
             { r: "Educator", t: "Schedules classes, invites families, sets up cameras and hosts the live classroom with full controls." },

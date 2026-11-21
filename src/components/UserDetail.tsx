@@ -63,7 +63,7 @@ export function UserDetail({ role }: { role: "educator" | "family" }) {
     <div>
       <Link href={back} className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800"><ArrowLeft className="h-4 w-4" />{role === "educator" ? "Educators" : "Families"}</Link>
       {msg && <div className="mb-4"><Alert kind="success">{msg}</Alert></div>}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6">
           <Card className="p-6">
             <div className="flex items-center gap-4">
@@ -109,7 +109,7 @@ export function UserDetail({ role }: { role: "educator" | "family" }) {
             <Card>
               <CardHeader title={`Assigned families (${assigned.length})`} />
               {assigned.length === 0 ? <p className="px-5 py-6 text-sm text-slate-500">No families assigned. Assign them from a family&apos;s page.</p> : (
-                <div className="grid gap-2 p-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2">
                   {assigned.map((f) => <Link key={f.id} href={`/admin/families/${f.id}`} className="flex items-center gap-3 rounded-xl p-2 hover:bg-slate-50"><Avatar name={f.full_name} size="sm" /><div className="min-w-0"><p className="truncate text-sm font-medium">{f.full_name}</p><p className="truncate text-xs text-slate-500">{f.children}</p></div></Link>)}
                 </div>
               )}

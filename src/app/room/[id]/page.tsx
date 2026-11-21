@@ -276,7 +276,7 @@ export default function RoomPage() {
     return (
       <div className="min-h-screen bg-slate-950 text-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5"><Logo light /><Link href={home} className="text-sm text-slate-400 hover:text-white">Cancel</Link></div>
-        <div className="mx-auto grid max-w-5xl gap-8 px-6 pb-12 pt-4 lg:grid-cols-5 lg:items-center">
+        <div className="mx-auto grid grid-cols-1 max-w-5xl gap-8 px-6 pb-12 pt-4 lg:grid-cols-5 lg:items-center">
           <div className="lg:col-span-3">
             <div className="relative aspect-video overflow-hidden rounded-3xl bg-slate-800">
               {preview && preCam ? <Video stream={preview} muted mirror /> : (

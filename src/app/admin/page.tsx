@@ -35,7 +35,7 @@ export default function AdminDashboard() {
     <>
       <PageHeader title="Admin dashboard" subtitle="Everything happening across your platform."
         actions={<><LinkButton href="/admin/invite" variant="secondary"><UserPlus className="h-4 w-4" />Invite user</LinkButton><LinkButton href="/classes/new"><Plus className="h-4 w-4" />New class</LinkButton></>} />
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Live right now" value={live.length} icon={<Radio className="h-5 w-5" />} tone="rose" />
         <Stat label="Classes today" value={today.length} icon={<CalendarDays className="h-5 w-5" />} />
         <Stat label="Educators" value={people.filter((p) => p.role === "educator").length} icon={<GraduationCap className="h-5 w-5" />} tone="amber" />
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
         </Card>
       )}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader title="Upcoming classes" action={<LinkButton href="/admin/schedule" variant="ghost" className="py-1.5">Master schedule</LinkButton>} />
           {classes.length === 0 ? <p className="px-5 py-8 text-center text-sm text-slate-500">Nothing scheduled.</p> :

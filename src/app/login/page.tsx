@@ -28,7 +28,10 @@ export default function LoginPage() {
   }, []);
 
   useEffect(() => {
-    if (!authLoading && profile) router.replace(next ?? homeFor(profile.role));
+    if (!authLoading && profile) {
+      const fits = (n: string) => !["/admin", "/educator", "/family"].some((p) => n.startsWith(p)) || n.startsWith(homeFor(profile.role));
+      router.replace(next && fits(next) ? next : homeFor(profile.role));
+    }
   }, [authLoading, profile, next, router]);
 
   async function submit(e: React.FormEvent) {

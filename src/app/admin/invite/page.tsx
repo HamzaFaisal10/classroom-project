@@ -41,7 +41,7 @@ export default function InvitePage() {
   return (
     <>
       <PageHeader title="Invite a user" subtitle="Create a secure, one-time invitation link (valid for 7 days)." />
-      <div className="grid gap-6 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <Card className="p-6 lg:col-span-3">
           {link ? (
             <div className="space-y-5">
@@ -67,12 +67,12 @@ export default function InvitePage() {
                   ))}
                 </div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label={role === "family" ? "Family / parent name" : "Full name"}><input className="input" required value={name} onChange={(e) => setName(e.target.value)} /></Field>
                 <Field label="Email"><input className="input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></Field>
               </div>
               {role === "family" && (
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Children (optional)"><input className="input" value={children} onChange={(e) => setChildren(e.target.value)} placeholder="Zain (8), Hania (6)" /></Field>
                   <Field label="Assign to educator">
                     <select className="input" value={edId} onChange={(e) => setEdId(e.target.value)}>

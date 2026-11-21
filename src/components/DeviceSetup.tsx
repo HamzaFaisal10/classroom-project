@@ -106,7 +106,7 @@ export function DeviceSetup({ multi = false, onReady }: { multi?: boolean; onRea
         )}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card className="p-5">
           <div className="flex items-center gap-2 text-sm font-semibold"><Mic className="h-4 w-4 text-brand-600" />Microphone</div>
           <select className="input mt-3" value={mic} onChange={(e) => setMic(e.target.value)}>
