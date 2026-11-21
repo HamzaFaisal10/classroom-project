@@ -3,9 +3,11 @@
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: "Bricolage Grotesque Variable", var(--font-geist-sans), ui-sans-serif, sans-serif;
   --color-brand-50: #eef2ff;
   --color-brand-100: #e0e7ff;
   --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
   --color-brand-500: #5b6cf0;
   --color-brand-600: #4453e0;
   --color-brand-700: #3641b8;
@@ -26,3 +28,9 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 .table-base td { @apply px-4 py-3.5 border-b border-slate-100 align-middle; }
 .table-base tr:last-child td { @apply border-b-0; }
 video { background: #0b1020; }
+
+@keyframes pop-in { 0% { opacity: 0; transform: translateY(8px) scale(.96); } 100% { opacity: 1; transform: none; } }
+.pop-in { animation: pop-in .5s cubic-bezier(.2,.8,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .pop-in { animation: none; } }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
