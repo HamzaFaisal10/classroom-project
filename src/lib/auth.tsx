@@ -45,7 +45,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [loadProfile]);
 
   const refresh = useCallback(async () => { await loadProfile(session); }, [loadProfile, session]);
-  const signOut = useCallback(async () => { await supabase.auth.signOut(); setProfile(null); }, []);
+  const signOut = useCallback(async () => {
+    try { sessionStorage.setItem("classroom.signedOut", "1"); } catch {}
+    await supabase.auth.signOut(); setProfile(null);
+  }, []);
 
   return <Ctx.Provider value={{ session, profile, loading, refresh, signOut }}>{children}</Ctx.Provider>;
 }

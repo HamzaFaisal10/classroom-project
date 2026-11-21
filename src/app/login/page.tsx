@@ -39,7 +39,7 @@ export default function LoginPage() {
     setError(""); setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     setLoading(false);
-    if (error) setError(error.message === "Invalid login credentials" ? "Incorrect email or password." : error.message);
+    if (error) setError(error.message === "Invalid login credentials" ? "Incorrect email or password." : /banned/i.test(error.message) ? "This account has been deactivated. Please contact your administrator." : error.message);
   }
 
   return (

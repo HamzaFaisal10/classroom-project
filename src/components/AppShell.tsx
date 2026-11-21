@@ -46,7 +46,12 @@ export function AppShell({ children, allow }: { children: React.ReactNode; allow
 
   useEffect(() => {
     if (loading) return;
-    if (!session) { router.replace(`/login?next=${encodeURIComponent(path)}`); return; }
+    if (!session) {
+      let signedOut = false;
+      try { signedOut = sessionStorage.getItem("classroom.signedOut") === "1"; sessionStorage.removeItem("classroom.signedOut"); } catch {}
+      router.replace(signedOut ? "/login" : `/login?next=${encodeURIComponent(path)}`);
+      return;
+    }
     if (profile && allow && !allow.includes(profile.role)) router.replace("/no-access");
   }, [loading, session, profile, allow, router, path]);
 
