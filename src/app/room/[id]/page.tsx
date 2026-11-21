@@ -66,11 +66,13 @@ export default function RoomPage() {
 
   const flash = useCallback((t: string) => { setToast(t); setTimeout(() => setToast(""), 3500); }, []);
 
-  // ---- load class ----
+  // ---- load class (once per room; token refreshes must not reset the call) ----
+  const loadedRef = useRef<string | null>(null);
   useEffect(() => {
     if (loading) return;
-    if (!session) { router.replace(`/login?next=/room/${id}`); return; }
-    if (!profile) return;
+    if (!session) { if (!engineRef.current) router.replace(`/login?next=/room/${id}`); return; }
+    if (!profile || loadedRef.current === id) return;
+    loadedRef.current = id;
     (async () => {
       const { data } = await supabase.from("classes").select("*").eq("id", id).maybeSingle();
       const { data: s } = await supabase.from("settings").select("waiting_room").single();

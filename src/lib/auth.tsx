@@ -35,9 +35,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await loadProfile(data.session);
       setLoading(false);
     });
+    let currentUser: string | null = null;
     const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
-      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED") {
+      const uid = s?.user.id ?? null;
+      // SIGNED_IN also fires when a tab regains focus; only reload when the user really changed
+      if (uid !== currentUser || event === "USER_UPDATED") {
+        currentUser = uid;
         setTimeout(() => loadProfile(s), 0);
       }
     });
