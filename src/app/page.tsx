@@ -411,11 +411,21 @@ export default function Landing() {
           <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-brand-500/40 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-accent/25 blur-3xl" />
           <h2 className="relative mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-5xl">See it from the teacher&apos;s side and the family&apos;s side</h2>
-          <p className="relative mx-auto mt-4 max-w-lg text-brand-100">Sign in with a demo account as an admin, educator or family. The password for all three is Demo@12345.</p>
-          <div className="relative mt-8 flex flex-wrap justify-center gap-3">
-            <Link href={cta} className="rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-brand-900 hover:bg-brand-50">{profile ? "Open dashboard" : "Try the live demo"}</Link>
-            <a href="#features" className="rounded-xl px-6 py-3.5 text-sm font-semibold text-white ring-1 ring-white/30 hover:bg-white/10">Explore features</a>
+          <p className="relative mx-auto mt-4 max-w-lg text-brand-100">Pick a demo account. One click signs you straight in, no password needed.</p>
+          <div className="relative mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-3 text-left sm:grid-cols-3">
+            {[
+              ["admin", "Admin", "admin@classroom.demo", "Users, master schedule, reports"],
+              ["educator", "Educator", "educator@classroom.demo", "Schedule classes and teach live"],
+              ["family", "Family", "family@classroom.demo", "Join classes and RSVP"],
+            ].map(([k, r, e, t]) => (
+              <Link key={k} href={`/login?demo=${k}`} className="group rounded-2xl bg-white/10 p-5 ring-1 ring-white/15 transition hover:bg-white hover:text-brand-900">
+                <p className="font-display text-lg font-semibold">Continue as {r}</p>
+                <p className="mt-1 text-sm text-brand-100 group-hover:text-slate-600">{t}</p>
+                <p className="mt-4 truncate font-mono text-xs text-brand-200 group-hover:text-slate-500">{e}</p>
+              </Link>
+            ))}
           </div>
+          <p className="relative mt-6 text-sm text-brand-200">Signing in by hand? The password for all three accounts is <span className="font-mono text-white">Demo@12345</span>.</p>
         </div>
       </section>
 
