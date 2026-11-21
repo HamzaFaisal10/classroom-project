@@ -24,7 +24,7 @@ export default function JoinPage() {
 
   useEffect(() => {
     load();
-    const ch = supabase.channel(`class-status:${id}`)
+    const ch = supabase.channel(`class-status:${id}:${Date.now()}`)
       .on("postgres_changes", { event: "UPDATE", schema: "public", table: "classes", filter: `id=eq.${id}` }, load)
       .subscribe();
     const poll = setInterval(load, 15000);

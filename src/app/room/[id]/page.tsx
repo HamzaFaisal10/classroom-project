@@ -58,6 +58,7 @@ export default function RoomPage() {
   const [pinned, setPinned] = useState<string | null>(null);
   const [toast, setToast] = useState("");
   const [elapsed, setElapsed] = useState(0);
+  const [ask, setAsk] = useState<{ title: string; text: string; label: string; run: () => void } | null>(null);
   const attIdRef = useRef<number | null>(null);
   const micStreamRef = useRef<MediaStream | null>(null);
 
@@ -87,7 +88,7 @@ export default function RoomPage() {
   // families: auto-continue when class goes live
   useEffect(() => {
     if (phase !== "notlive") return;
-    const ch = supabase.channel(`room-status:${id}`)
+    const ch = supabase.channel(`room-status:${id}:${Date.now()}`)
       .on("postgres_changes", { event: "UPDATE", schema: "public", table: "classes", filter: `id=eq.${id}` }, ({ new: n }) => {
         if ((n as ClassRow).status === "live") { setCls(n as ClassRow); setPhase("precheck"); }
       }).subscribe();
@@ -203,9 +204,11 @@ export default function RoomPage() {
   }, [phase, cls]);
 
   // ---- actions ----
-  async function endClass() {
+  function endClass() {
+    setAsk({ title: "End the class for everyone?", text: "All families will leave the class and attendance will be saved.", label: "End class", run: doEndClass });
+  }
+  async function doEndClass() {
     if (!cls || !engineRef.current) return;
-    if (!confirm("End the class for everyone?")) return;
     engineRef.current.control("*", "end");
     await supabase.from("classes").update({ status: "ended", ended_at: new Date().toISOString() }).eq("id", cls.id);
     finish("ended");
@@ -233,6 +236,10 @@ export default function RoomPage() {
       e.addLocal({ id: s.id, label: "Screen", stream: s });
       setPinned(`${profile!.id}:${s.id}`);
     } catch { /* user cancelled */ }
+  }
+
+  function askRemove(pid: string, name: string) {
+    setAsk({ title: `Remove ${name}?`, text: "They will leave the class and can't rejoin this session.", label: "Remove", run: () => engineRef.current?.control(pid, "remove") });
   }
 
   // ---- derived ----
@@ -341,7 +348,7 @@ export default function RoomPage() {
     controls: isHost && !t.p.me && !t.p.host ? {
       mute: () => engine?.control(t.p.id, "mute"),
       camoff: () => engine?.control(t.p.id, "camoff"),
-      remove: () => { if (confirm(`Remove ${t.p.name} from the class?`)) engine?.control(t.p.id, "remove"); },
+      remove: () => askRemove(t.p.id, t.p.name),
       lowerHand: () => engine?.control(t.p.id, "lowerhand"),
     } : undefined,
   });
@@ -417,7 +424,7 @@ export default function RoomPage() {
                       {isHost && !p.me && !p.host && (
                         <div className="flex gap-0.5">
                           <button onClick={() => engine?.control(p.id, "mute")} className="rounded p-1 text-slate-400 hover:bg-white/10 hover:text-white" title="Mute"><MicOff className="h-3.5 w-3.5" /></button>
-                          <button onClick={() => { if (confirm(`Remove ${p.name}?`)) engine?.control(p.id, "remove"); }} className="rounded p-1 text-slate-400 hover:bg-white/10 hover:text-rose-400" title="Remove"><X className="h-3.5 w-3.5" /></button>
+                          <button onClick={() => askRemove(p.id, p.name)} className="rounded p-1 text-slate-400 hover:bg-white/10 hover:text-rose-400" title="Remove"><X className="h-3.5 w-3.5" /></button>
                         </div>
                       )}
                     </div>
@@ -428,6 +435,19 @@ export default function RoomPage() {
           </aside>
         )}
       </div>
+
+      {ask && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setAsk(null)}>
+          <div className="w-full max-w-sm rounded-2xl bg-slate-900 p-6 ring-1 ring-white/10" onClick={(e) => e.stopPropagation()}>
+            <p className="text-lg font-semibold">{ask.title}</p>
+            <p className="mt-1 text-sm text-slate-400">{ask.text}</p>
+            <div className="mt-6 flex justify-end gap-2">
+              <button onClick={() => setAsk(null)} className="rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold hover:bg-white/20">Cancel</button>
+              <button onClick={() => { const run = ask.run; setAsk(null); run(); }} className="rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold hover:bg-rose-500">{ask.label}</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <div className="pointer-events-none fixed inset-x-0 bottom-28 z-40 flex justify-center"><span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-900 shadow-xl">{toast}</span></div>}
 

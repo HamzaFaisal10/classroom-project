@@ -13,6 +13,7 @@ export interface Member {
   cam: boolean;
   hand?: boolean;
   streams: Record<string, string>; // streamId -> label
+  inRoom?: boolean; // guest already admitted (used to restore after a host refresh)
   admitted?: string[]; // only hosts publish
   removed?: string[]; // only hosts publish
   joinedAt: number;
@@ -78,7 +79,7 @@ export class RoomEngine {
   async join(local: LocalStream[], mic: boolean, cam: boolean) {
     this.local = local;
     this.state.mic = mic; this.state.cam = cam;
-    const ch = this.transport.channel(`room:${this.classId}`, { config: { presence: { key: this.me.id }, broadcast: { self: false, ack: false } } });
+    const ch = this.transport.channel(`room:${this.classId}`, { config: { private: true, presence: { key: this.me.id }, broadcast: { self: false, ack: false } } });
     this.channel = ch;
     ch.on("presence", { event: "sync" }, () => this.onPresence());
     ch.on("broadcast", { event: "signal" }, ({ payload }) => this.onSignal(payload));
@@ -107,6 +108,7 @@ export class RoomEngine {
       id: this.me.id, name: this.me.name, host: this.me.host,
       mic: this.state.mic, cam: this.state.cam, hand: this.state.hand,
       streams: Object.fromEntries(this.local.map((l) => [l.stream.id, l.label])),
+      inRoom: this.me.host ? undefined : this.amAdmitted(),
       admitted: this.me.host ? [...this.admitted] : undefined,
       removed: this.me.host ? [...this.removed] : undefined,
       joinedAt: this.joinedAt,
@@ -134,15 +136,17 @@ export class RoomEngine {
       for (const m of Object.values(next)) {
         if (m.host || m.id === this.me.id) continue;
         const otherHostAdmitted = Object.values(next).some((h) => h.host && h.admitted?.includes(m.id));
-        if ((!this.opts.waitingRoom || otherHostAdmitted) && !this.admitted.has(m.id) && !this.removed.has(m.id)) { this.admitted.add(m.id); changed = true; }
+        if ((!this.opts.waitingRoom || otherHostAdmitted || m.inRoom) && !this.admitted.has(m.id) && !this.removed.has(m.id)) { this.admitted.add(m.id); this.everAdmitted.add(m.id); changed = true; }
       }
       if (changed) this.publish();
     }
 
     // compute admissions
+    const wasIn = this.amAdmitted();
     for (const m of Object.values(next)) {
       if (this.isAdmittedNow(m.id)) this.everAdmitted.add(m.id);
     }
+    if (!wasIn && this.amAdmitted()) this.publish();
     const removedByHost = Object.values(next).some((h) => h.host && h.removed?.includes(this.me.id));
     if (removedByHost && !this.me.host) { this.emit({ type: "control", action: "remove", from: "host" }); return; }
 

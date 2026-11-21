@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const n = new URLSearchParams(window.location.search).get("next");
-    if (n && n.startsWith("/")) setNext(n);
+    if (n && n.startsWith("/") && !n.startsWith("//") && !n.startsWith("/\\")) setNext(n);
   }, []);
 
   useEffect(() => {

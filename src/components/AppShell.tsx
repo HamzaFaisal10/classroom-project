@@ -52,16 +52,21 @@ export function AppShell({ children, allow }: { children: React.ReactNode; allow
 
   useEffect(() => { setOpen(false); }, [path]);
 
+  const uid = profile?.id;
   useEffect(() => {
-    if (!profile) return;
+    if (!uid) return;
+    supabase.from("notifications").select("id", { count: "exact", head: true }).eq("read", false)
+      .then(({ count }) => setUnread(count ?? 0));
+  }, [uid, path]);
+  useEffect(() => {
+    if (!uid) return;
     const load = () => supabase.from("notifications").select("id", { count: "exact", head: true }).eq("read", false)
       .then(({ count }) => setUnread(count ?? 0));
-    load();
-    const ch = supabase.channel(`notif:${profile.id}`)
-      .on("postgres_changes", { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${profile.id}` }, load)
+    const ch = supabase.channel(`notif:${uid}:${Date.now()}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${uid}` }, load)
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [profile, path]);
+  }, [uid]);
 
   if (loading || !session || !profile) {
     return (
