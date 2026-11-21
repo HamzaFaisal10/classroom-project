@@ -31,10 +31,10 @@ export default function Landing() {
             <span className="h-1.5 w-1.5 rounded-full bg-rose-500" /> Live classes for educators and families
           </span>
           <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-bold tracking-tight text-ink sm:text-6xl">
-            The online classroom that shows <span className="text-brand-600">every angle</span>.
+            Run your online classes <span className="text-brand-600">without the chaos</span>.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-600">
-            Schedule classes, invite families and teach live with multiple cameras — with secure, role-based access for admins, educators and families.
+            Scheduling, invites, live video and attendance in one simple platform for tutors and schools.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/login" className="rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-700">Try the demo</Link>
